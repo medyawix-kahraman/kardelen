@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kardelen Temizlik Ofisi – Adana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --mint:    #3ECFB2;
+      --navy:    #0B2540;
+      --snow:    #F5FAF9;
+      --white:   #FFFFFF;
+      --gray:    #6B7C8D;
+      --accent:  #FFD166;
+      --card-bg: #EBF6F4;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--snow);
+      color: var(--navy);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(11,37,64,0.94);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.18);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.5px;
+    }
+    .nav-logo span { color: var(--mint); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none; font-size: 0.9rem; font-weight: 500;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--mint); }
+    .nav-cta {
+      background: var(--mint); color: var(--navy) !important;
+      padding: 10px 22px; border-radius: 30px; font-weight: 700 !important;
+    }
+    .nav-cta:hover { background: var(--accent) !important; color: var(--navy) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      overflow: hidden; padding-top: 80px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0B2540 55%, #0e3860 100%);
+    }
+    .hero-pattern {
+      position: absolute; inset: 0; opacity: 0.06;
+      background-image: radial-gradient(circle, #3ECFB2 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+    .hero-img {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 52%;
+      object-fit: cover; opacity: 0.22;
+      mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.9) 40%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.9) 40%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 680px; padding: 0 60px;
+      animation: fadeUp .9s ease both;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(62,207,178,0.15); border: 1px solid var(--mint);
+      color: var(--mint); border-radius: 30px;
+      padding: 6px 18px; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 900; line-height: 1.1;
+      color: var(--white); margin-bottom: 22px;
+    }
+    .hero h1 em { color: var(--mint); font-style: normal; }
+    .hero p {
+      color: rgba(255,255,255,0.72); font-size: 1.1rem;
+      line-height: 1.7; margin-bottom: 40px; max-width: 520px;
+    }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--mint); color: var(--navy);
+      padding: 15px 34px; border-radius: 40px;
+      font-weight: 700; font-size: 1rem;
+      text-decoration: none; transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 6px 24px rgba(62,207,178,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(62,207,178,0.45); }
+    .btn-secondary {
+      background: transparent; color: var(--white);
+      padding: 15px 34px; border-radius: 40px;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      font-weight: 600; font-size: 1rem;
+      text-decoration: none; transition: border-color .2s, color .2s;
+    }
+    .btn-secondary:hover { border-color: var(--mint); color: var(--mint); }
+
+    /* stats bar */
+    .stats-bar {
+      background: var(--white); border-top: 3px solid var(--mint);
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    }
+    .stat {
+      padding: 28px 48px; text-align: center;
+      border-right: 1px solid #e2ede9; flex: 1; min-width: 160px;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 900;
+      color: var(--navy);
+    }
+    .stat-num span { color: var(--mint); }
+    .stat-label { font-size: 0.82rem; color: var(--gray); font-weight: 500; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* ── SECTIONS ── */
+    section { padding: 90px 60px; }
+
+    .section-tag {
+      display: inline-block;
+      color: var(--mint); font-weight: 700; font-size: 0.8rem;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900;
+      color: var(--navy); line-height: 1.2; margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--gray); font-size: 1.05rem; line-height: 1.7;
+      max-width: 560px;
+    }
+    .centered { text-align: center; }
+    .centered .section-sub { margin: 0 auto; }
+
+    /* ── SERVICES ── */
+    #hizmetler { background: var(--snow); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px; margin-top: 52px;
+    }
+    .service-card {
+      background: var(--white); border-radius: 20px;
+      overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform .3s, box-shadow .3s;
+      position: relative;
+    }
+    .service-card:hover { transform: translateY(-8px); box-shadow: 0 16px 40px rgba(0,0,0,0.12); }
+    .service-card img {
+      width: 100%; height: 200px; object-fit: cover;
+      display: block;
+    }
+    .service-body { padding: 26px; }
+    .service-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--card-bg); display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 14px;
+    }
+    .service-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 10px;
+    }
+    .service-body p { color: var(--gray); font-size: 0.9rem; line-height: 1.6; }
+    .service-tag {
+      position: absolute; top: 14px; left: 14px;
+      background: var(--mint); color: var(--navy);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 1px;
+      padding: 4px 12px; border-radius: 20px; text-transform: uppercase;
+    }
+
+    /* ── WHY ── */
+    #neden { background: var(--navy); }
+    #neden .section-title { color: var(--white); }
+    #neden .section-sub { color: rgba(255,255,255,0.6); }
+    .why-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; margin-top: 52px;
+    }
+    .why-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(62,207,178,0.2);
+      border-radius: 16px; padding: 30px;
+      transition: background .2s;
+    }
+    .why-card:hover { background: rgba(62,207,178,0.1); }
+    .why-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem; font-weight: 900;
+      color: var(--mint); opacity: 0.3; line-height: 1; margin-bottom: 12px;
+    }
+    .why-card h4 { color: var(--white); font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+    .why-card p { color: rgba(255,255,255,0.55); font-size: 0.9rem; line-height: 1.6; }
+
+    /* ── GALLERY ── */
+    #galeri { background: var(--snow); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 220px 220px;
+      gap: 14px; margin-top: 52px; border-radius: 20px; overflow: hidden;
+    }
+    .gallery-item { overflow: hidden; position: relative; }
+    .gallery-item:first-child { grid-row: 1 / 3; }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; transition: transform .5s;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(11,37,64,0.55), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    /* ── CONTACT ── */
+    #iletisim { background: var(--white); }
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; margin-top: 52px; align-items: start;
+    }
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700; margin-bottom: 28px; color: var(--navy);
+    }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      margin-bottom: 24px;
+    }
+    .contact-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: var(--card-bg); display: flex;
+      align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+    }
+    .contact-item h5 { font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .contact-item p, .contact-item a {
+      color: var(--gray); font-size: 0.95rem;
+      text-decoration: none; line-height: 1.5;
+    }
+    .contact-item a:hover { color: var(--mint); }
+
+    .call-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--mint); color: var(--navy);
+      padding: 16px 36px; border-radius: 40px;
+      font-weight: 700; font-size: 1.05rem;
+      text-decoration: none; margin-top: 16px;
+      box-shadow: 0 6px 20px rgba(62,207,178,0.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .call-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(62,207,178,0.45); }
+
+    .contact-form {
+      background: var(--snow); border-radius: 24px; padding: 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    }
+    .contact-form h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700; margin-bottom: 28px; color: var(--navy);
+    }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 7px; color: var(--navy); }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; border: 1.5px solid #d4e6e1;
+      border-radius: 10px; padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+      background: var(--white); color: var(--navy);
+      outline: none; transition: border-color .2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--mint);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      width: 100%; background: var(--navy); color: var(--white);
+      border: none; border-radius: 10px; padding: 15px;
+      font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1rem;
+      cursor: pointer; transition: background .2s;
+    }
+    .form-submit:hover { background: var(--mint); color: var(--navy); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,0.6);
+      text-align: center; padding: 30px 60px;
+      font-size: 0.88rem;
+    }
+    footer strong { color: var(--mint); }
+
+    /* ── FLOATING CALL ── */
+    .floating-call {
+      position: fixed; bottom: 28px; right: 28px; z-index: 998;
+      background: var(--mint); color: var(--navy);
+      width: 58px; height: 58px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(62,207,178,0.45);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 24px rgba(62,207,178,0.45); }
+      50% { box-shadow: 0 6px 40px rgba(62,207,178,0.7); transform: scale(1.06); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      section { padding: 60px 20px; }
+      .hero-content { padding: 0 20px; }
+      .why-grid { grid-template-columns: 1fr; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item:first-child { grid-row: auto; grid-column: 1 / 3; }
+      .stat { padding: 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Kardelen<span>✦</span></div>
+  <ul class="nav-links">
+    <li><a href="#hizmetler">Hizmetler</a></li>
+    <li><a href="#neden">Neden Biz</a></li>
+    <li><a href="#galeri">Galeri</a></li>
+    <li><a href="#iletisim" class="nav-cta">İletişim</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="anasayfa">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <img class="hero-img"
+    src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&auto=format&fit=crop"
+    alt="Temizlik" />
+  <div class="hero-content">
+    <div class="hero-badge">⭐ Adana'nın Güvenilir Temizlik Markası</div>
+    <h1>Temiz Bir Alan,<br/><em>Huzurlu Bir Yaşam</em></h1>
+    <p>Ev, ofis, inşaat sonrası ve fabrika temizliğinde profesyonel, hijyenik ve güvenilir hizmet. Adana genelinde 7/24 hizmetinizdeyiz.</p>
+    <div class="hero-btns">
+      <a href="tel:05510693720" class="btn-primary">📞 Hemen Ara</a>
+      <a href="#hizmetler" class="btn-secondary">Hizmetlerimiz →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">500<span>+</span></div><div class="stat-label">Mutlu Müşteri</div></div>
+  <div class="stat"><div class="stat-num">5<span>+</span></div><div class="stat-label">Yıllık Deneyim</div></div>
+  <div class="stat"><div class="stat-num">4</div><div class="stat-label">Hizmet Kategorisi</div></div>
+  <div class="stat"><div class="stat-num">%100</div><div class="stat-label">Memnuniyet Garantisi</div></div>
+</div>
+
+<!-- HİZMETLER -->
+<section id="hizmetler">
+  <div class="centered">
+    <span class="section-tag">✦ Hizmetlerimiz</span>
+    <h2 class="section-title">Her Alan İçin<br/>Uzman Temizlik</h2>
+    <p class="section-sub">Profesyonel ekibimiz ve güçlü ekipmanlarımızla her türlü temizlik ihtiyacınıza çözüm sunuyoruz.</p>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <span class="service-tag">Popüler</span>
+      <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&auto=format&fit=crop" alt="Ev Temizliği" />
+      <div class="service-body">
+        <div class="service-icon">🏠</div>
+        <h3>Ev Temizliği</h3>
+        <p>Mutfaktan banyoya, oturma odasından yatak odalarına tüm evinizi pırıl pırıl yapıyoruz. Düzenli veya tek seferlik temizlik.</p>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&auto=format&fit=crop" alt="Ofis Temizliği" />
+      <div class="service-body">
+        <div class="service-icon">🏢</div>
+        <h3>Ofis & İşyeri Temizliği</h3>
+        <p>Çalışma ortamınızı hijyenik ve verimli tutuyoruz. Günlük, haftalık veya aylık periyotlarda profesyonel ofis temizliği.</p>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&auto=format&fit=crop" alt="İnşaat Sonrası Temizlik" />
+      <div class="service-body">
+        <div class="service-icon">🏗️</div>
+        <h3>İnşaat Sonrası Temizlik</h3>
+        <p>Yeni binanızı teslim almadan önce toz, kireç ve inşaat atıklarını temizliyor, yaşama hazır hale getiriyoruz.</p>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&auto=format&fit=crop" alt="Fabrika Temizliği" />
+      <div class="service-body">
+        <div class="service-icon">🏭</div>
+        <h3>Fabrika & Endüstriyel</h3>
+        <p>Büyük ölçekli üretim alanları, depolar ve endüstriyel tesisler için güçlü ekipmanlarla kapsamlı temizlik hizmeti.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NEDEN BİZ -->
+<section id="neden">
+  <div class="centered">
+    <span class="section-tag">✦ Neden Kardelen</span>
+    <h2 class="section-title" style="color:var(--white)">Farkımız Kalitede<br/>ve Güvende</h2>
+    <p class="section-sub">Adana'da yüzlerce müşterimizin bize güvenmesinin nedenleri.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-num">01</div>
+      <h4>Uzman & Eğitimli Ekip</h4>
+      <p>Tüm personelimiz özel eğitim almış, referanslı ve güvenilir kişilerden oluşmaktadır.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">02</div>
+      <h4>Profesyonel Ekipman</h4>
+      <p>En son teknoloji temizlik makineleri ve çevre dostu ürünlerle mükemmel sonuç garantisi.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">03</div>
+      <h4>Zamanında Hizmet</h4>
+      <p>Randevularınıza dakikası dakikasına uyuyoruz. Geç kalmak bizim sözlüğümüzde yok.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">04</div>
+      <h4>Uygun Fiyat Politikası</h4>
+      <p>Kaliteli hizmet için yüksek ücret ödemek zorunda değilsiniz. Bütçenize uygun paketler.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALERİ -->
+<section id="galeri">
+  <div class="centered">
+    <span class="section-tag">✦ Çalışmalarımız</span>
+    <h2 class="section-title">Önce &amp; Sonra</h2>
+    <p class="section-sub">Gerçek projelerden fotoğraflar – farkı kendiniz görün.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop" alt="Temizlik 1" />
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1527515545081-5db817172677?w=600&auto=format&fit=crop" alt="Temizlik 2" />
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&auto=format&fit=crop" alt="Temizlik 3" />
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&auto=format&fit=crop" alt="Temizlik 4" />
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1563453392212-326f5e854473?w=600&auto=format&fit=crop" alt="Temizlik 5" />
+      <div class="gallery-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- İLETİŞİM -->
+<section id="iletisim">
+  <div class="centered" style="margin-bottom:0">
+    <span class="section-tag">✦ İletişim</span>
+    <h2 class="section-title">Bizimle İletişime Geçin</h2>
+    <p class="section-sub">Ücretsiz keşif ve fiyat teklifi için hemen arayın veya formu doldurun.</p>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h3>Bize Ulaşın</h3>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <h5>Telefon</h5>
+          <a href="tel:05510693720">0551 069 37 20</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <h5>Hizmet Bölgesi</h5>
+          <p>Adana ve çevre illeri</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <h5>Çalışma Saatleri</h5>
+          <p>Pazartesi – Cumartesi: 08:00 – 20:00<br/>Pazar: Randevuya göre</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✅</div>
+        <div>
+          <h5>Hizmet Garantisi</h5>
+          <p>%100 memnuniyet garantisi veriyoruz. Memnun kalmazsanız ücretsiz yeniden geliriz.</p>
+        </div>
+      </div>
+      <a href="tel:05510693720" class="call-btn">📞 Hemen Ara – 0551 069 37 20</a>
+    </div>
+
+    <div class="contact-form">
+      <h3>Teklif İsteyin</h3>
+      <div class="form-group">
+        <label>Ad Soyad</label>
+        <input type="text" placeholder="Adınız Soyadınız" />
+      </div>
+      <div class="form-group">
+        <label>Telefon</label>
+        <input type="tel" placeholder="05XX XXX XX XX" />
+      </div>
+      <div class="form-group">
+        <label>Hizmet Türü</label>
+        <select>
+          <option>Seçiniz...</option>
+          <option>Ev Temizliği</option>
+          <option>Ofis / İşyeri Temizliği</option>
+          <option>İnşaat Sonrası Temizlik</option>
+          <option>Fabrika / Endüstriyel Temizlik</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Notunuz</label>
+        <textarea placeholder="Temizlenecek alan, özel istekler..."></textarea>
+      </div>
+      <button class="form-submit" onclick="alert('Mesajınız alındı! En kısa sürede sizi arayacağız. 📞')">
+        Teklif Gönder →
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Kardelen Temizlik Ofisi</strong> – Adana &nbsp;|&nbsp; 📞 <a href="tel:05510693720" style="color:var(--mint);text-decoration:none">0551 069 37 20</a></p>
+  <p style="margin-top:8px;font-size:0.8rem;">Tüm hakları saklıdır. Profesyonel &amp; Hijyenik Temizlik Hizmetleri.</p>
+</footer>
+
+<!-- FLOATING CALL BUTTON -->
+<a href="tel:05510693720" class="floating-call" title="Hemen Ara">📞</a>
+
+</body>
+</html>
